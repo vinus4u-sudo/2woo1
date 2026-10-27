@@ -529,8 +529,8 @@ var ITEMS=[
   fields:[{k:'pick',type:'mapclick'},T('where','이슈가 일어난 곳 (대륙, 나라, 대략의 위도·경도)',3)]},
  {id:'i2',step:'지역 조사',title:'나라(지역)의 특징 조사',
   guide:'이슈가 일어난 나라를 한두 줄씩 조사해서 정리하세요. 조사한 자료의 출처는 사진 출처와 별개로 글 안에 간단히 적어도 좋아요.',
-  fields:[T('climate','기후·지형',2),T('industry','주요 산업',2),T('life','사람들의 생활 모습',2),T('link','이 이슈와의 관련',2)],
-  photo:'그 나라(지역)의 풍경이나 생활 모습'},
+  fields:[T('climate','기후·지형',2),T('industry','주요 산업 (경제)',2),T('life','사람들의 생활 모습 (의·식·주를 비롯해 자유롭게 생각해 보기)',3),T('link','이 이슈와의 관련',2)],
+  photo:'이슈와 관련된 그 지역의 사진 (이슈가 일어난 곳의 풍경, 산업, 사람들의 생활 모습 등)'},
  {id:'i00',step:'도입',title:'내 생활 속 소재와 상품사슬 떠올리기',
   guide:'앞에서 고른 일상 소재가 내 손에 오기까지의 길을 단계별로 읽고, 단계마다 나라나 업체를 사례로 찾아 써 보세요. 물건의 라벨(제조국·원산지)이나 포장이 단서가 돼요.',
   alt:{title:'이슈 사전지식 점검과 관련 기사 스크랩',guide:'선택한 생태 이슈에 대해 이미 알고 있는 것을 먼저 점검하고, 이슈와 관련된 기사 한 편을 골라 스크랩해 보세요. 기사는 ‘우리 모둠 자료’나 직접 검색한 것 중에서 골라요.',photo:'기사 화면 캡처 또는 이슈와 관련된 사진 (출처를 꼭 적어요)'},
@@ -553,12 +553,12 @@ var ITEMS=[
    T('fact','자료에서 찾은 사실 두 가지 (숫자·연도·장소 포함)',3),
    {k:'stage',type:'select',mode:'chain',label:'이 이슈는 상품사슬의 어느 단계에서 일어났나요?',opts:['원료 재배·채취','생산·가공','운송·유통','소비','폐기·재활용']},
    Tm('chain',T('stagewhy','그렇게 고른 이유',2)),
-   T('people','이슈와 관련된 사람들이 각자 바라는 것 (세 명)',4,false,'예: 농민 — 농사 지을 물이 필요해요 / 공장 노동자 — 안전한 일터를 바라요 / 소비자(우리) — 싼 가격을 바라요'),
+   T('people','이슈와 관련된 이해당사자를 쓰고, 그들이 바라는 것을 자유롭게 기록해 보자.',4,false,'예: 이해당사자 — 바라는 것'),
    T('heart','그 지역에서 살아가는 사람이라면 어떤 마음일까요? 그 이유도 써 보세요.',3,false,'예: 걱정되고 억울할 것 같다. 내가 쓰지도 않은 물 때문에 삶이 흔들리니까'),
    T('act','지금 나(우리)가 공감하며 행동할 수 있는 것은 무엇이 있을까요?',3,false,'예: 옷을 오래 입고 헌 옷은 나눠 쓴다 / 이 이슈를 친구들에게 알린다 / 물건을 살 때 원산지와 만든 방법을 살펴본다'),
    T('word','처음 보는 낱말이나 더 알고 싶은 점',2,true)]},
  {id:'i6',step:'도입',title:'이슈 해시태그 3개 정하기',
-  guide:'이슈 자료를 읽고 알게 된 내용을 해시태그 3개로 정리하고, 그 단어를 고른 이유를 한 문장씩 써요. 해시태그 앞의 #은 자동으로 붙어요.',
+  guide:'이슈 자료를 읽고 알게 된 내용을 해시태그 3개로 정리하고, 그 단어를 고른 이유를 한 문장씩 써요. 어울리는 해시태그를 추천해 주니 눌러서 추가하거나 ‘자동 채우기’를 쓰고, 직접 고쳐 써도 돼요. 해시태그 앞의 #은 자동으로 붙어요.',
   fields:[{k:'tags',type:'tags'}],
   photo:'해시태그 3개를 가장 잘 나타내는 사진'},
  {id:'i6b',step:'카드뉴스',title:'카드뉴스 만들기 (1차시 마무리)',
@@ -634,34 +634,60 @@ function chainDetail(t){
 /* 도입: 물건이 내 손에 오기까지 — 비계(사례 힌트와 검색어) */
 var SCAF={
  jeans:[
-  {ex:'목화를 키우는 나라 (예: 인도·중국·미국·파키스탄 등)',ph:'예: 인도 · ○○ 면화 농장',sq:'청바지 면 원료 목화 주요 생산국'},
-  {ex:'실과 천(데님)을 만드는 나라나 회사',ph:'예: 중국 · ○○ 방직 회사',sq:'데님 원단 주요 생산국 방적 공장'},
-  {ex:'봉제하는 나라 (옷 라벨의 ‘제조국’)',ph:'예: 방글라데시 · ○○ 봉제 공장',sq:'청바지 제조국 봉제 공장 브랜드'},
-  {ex:'배가 드나드는 항구나 운송 회사',ph:'예: 부산항 · ○○ 해운사',sq:'의류 컨테이너 해상 운송 항구 수입'},
-  {ex:'내가 산 가게나 브랜드',ph:'예: ○○ 브랜드 · ○○ 매장',sq:'내 청바지 브랜드 공급망 생산 국가'}
+  {ex:'목화를 키우는 나라나 농장',ph:'나라 · 업체 이름',sq:'청바지 면 원료 목화 주요 생산국'},
+  {ex:'실과 천(데님)을 만드는 나라나 회사',ph:'나라 · 업체 이름',sq:'데님 원단 주요 생산국 방적 공장'},
+  {ex:'봉제하는 나라 (옷 라벨의 ‘제조국’)',ph:'나라 · 업체 이름',sq:'청바지 제조국 봉제 공장 브랜드'},
+  {ex:'배가 드나드는 항구나 운송 회사',ph:'나라 · 업체 이름',sq:'의류 컨테이너 해상 운송 항구 수입'},
+  {ex:'내가 산 가게나 브랜드',ph:'나라 · 업체 이름',sq:'내 청바지 브랜드 공급망 생산 국가'}
  ],
  fastfashion:[
-  {ex:'합성섬유(폴리에스터) 원료를 만드는 나라나 회사',ph:'예: 중국 · ○○ 화학 회사',sq:'폴리에스터 섬유 원료 주요 생산국'},
-  {ex:'값싸게 옷을 만드는 공장이 많은 나라 (예: 방글라데시·베트남·중국 등)',ph:'예: 방글라데시 · ○○ 봉제 공장',sq:'패스트패션 브랜드 의류 생산 국가 공장'},
-  {ex:'배와 비행기가 거치는 항구·공항',ph:'예: 인천항 · ○○ 운송사',sq:'의류 수입 해상 운송 항구'},
-  {ex:'내가 산 브랜드와 매장',ph:'예: ○○ 브랜드 · ○○ 매장',sq:'패스트패션 브랜드 신제품 출시 주기'},
-  {ex:'헌 옷이 가는 곳 (수출·재활용 나라)',ph:'예: 가나 · 칠레',sq:'헌 옷 수출 국가 한국 헌 옷 수출'}
+  {ex:'합성섬유(폴리에스터) 원료를 만드는 나라나 회사',ph:'나라 · 업체 이름',sq:'폴리에스터 섬유 원료 주요 생산국'},
+  {ex:'옷을 만드는 공장이 있는 나라나 업체',ph:'나라 · 업체 이름',sq:'패스트패션 브랜드 의류 생산 국가 공장'},
+  {ex:'배와 비행기가 거치는 항구·공항',ph:'나라 · 업체 이름',sq:'의류 수입 해상 운송 항구'},
+  {ex:'내가 산 브랜드와 매장',ph:'나라 · 업체 이름',sq:'패스트패션 브랜드 신제품 출시 주기'},
+  {ex:'헌 옷이 가는 곳 (수출·재활용 나라)',ph:'나라 · 업체 이름',sq:'헌 옷 수출 국가 한국 헌 옷 수출'}
  ],
  avocado:[
-  {ex:'아보카도를 키우는 나라 (라벨의 ‘원산지’)',ph:'예: 멕시코 · ○○ 농장',sq:'아보카도 주요 생산국 수입국 원산지'},
-  {ex:'수확·포장해서 수출하는 업체',ph:'예: ○○ 수출 업체',sq:'아보카도 수확 선별 포장 수출 업체'},
-  {ex:'냉장 컨테이너가 지나는 항구·항공',ph:'예: ○○항 · 냉장 컨테이너',sq:'과일 냉장 컨테이너 해상 운송 아보카도'},
-  {ex:'수입 업체나 마트',ph:'예: ○○ 수입사 · ○○ 마트',sq:'아보카도 수입 업체 유통 마트'},
-  {ex:'먹고 남은 껍질·씨앗이 가는 곳',ph:'예: 음식물 쓰레기 처리장',sq:'음식물 쓰레기 처리 과정'}
+  {ex:'아보카도를 키우는 나라 (라벨의 ‘원산지’)',ph:'나라 · 업체 이름',sq:'아보카도 주요 생산국 수입국 원산지'},
+  {ex:'수확·포장해서 수출하는 업체',ph:'나라 · 업체 이름',sq:'아보카도 수확 선별 포장 수출 업체'},
+  {ex:'냉장 컨테이너가 지나는 항구·항공',ph:'나라 · 업체 이름',sq:'과일 냉장 컨테이너 해상 운송 아보카도'},
+  {ex:'수입 업체나 마트',ph:'나라 · 업체 이름',sq:'아보카도 수입 업체 유통 마트'},
+  {ex:'먹고 남은 껍질·씨앗이 가는 곳',ph:'나라 · 업체 이름',sq:'음식물 쓰레기 처리 과정'}
  ],
  fish:[
-  {ex:'물고기를 잡거나 기르는 바다·나라',ph:'예: 남서대서양 · ○○ 원양어선',sq:'생선가공식품 원료 어획 해역 원양어선'},
-  {ex:'가공 공장이 있는 나라나 업체',ph:'예: 아르헨티나 · ○○ 수산 가공 회사',sq:'어묵 통조림 가공 공장 원료 수입 국가'},
-  {ex:'냉동 컨테이너가 지나는 항구',ph:'예: ○○항 · 냉동 컨테이너',sq:'냉동 수산물 수입 항구 컨테이너'},
-  {ex:'내가 산 마트나 브랜드',ph:'예: ○○ 브랜드 · ○○ 마트',sq:'수산 가공식품 브랜드 원산지 표시'},
-  {ex:'포장재와 남은 음식이 가는 곳',ph:'예: 재활용 센터',sq:'통조림 캔 포장 재활용 방법'}
+  {ex:'물고기를 잡거나 기르는 바다·나라',ph:'나라 · 업체 이름',sq:'생선가공식품 원료 어획 해역 원양어선'},
+  {ex:'가공 공장이 있는 나라나 업체',ph:'나라 · 업체 이름',sq:'어묵 통조림 가공 공장 원료 수입 국가'},
+  {ex:'냉동 컨테이너가 지나는 항구',ph:'나라 · 업체 이름',sq:'냉동 수산물 수입 항구 컨테이너'},
+  {ex:'내가 산 마트나 브랜드',ph:'나라 · 업체 이름',sq:'수산 가공식품 브랜드 원산지 표시'},
+  {ex:'포장재와 남은 음식이 가는 곳',ph:'나라 · 업체 이름',sq:'통조림 캔 포장 재활용 방법'}
  ]
 };
+var TAGSUG={aral:['아랄해','면화','관개농업','사막화','물부족','소금먼지','카자흐스탄','우즈베키스탄'],
+ pakistan:['파키스탄홍수','면화','기후위기','청바지가격','이재민','침수','몬순','남아시아'],
+ bangla:['라나플라자','패스트패션','봉제공장','노동자안전','방글라데시','값싼옷','폐수','윤리적소비'],
+ argentina:['분홍빛호수','아르헨티나','수산가공','가공폐수','어분','호수오염','물고기','가공공장'],
+ chile:['옷무덤','아타카마사막','칠레','헌옷','패스트패션','옷쓰레기','중고의류','사막'],
+ kenya:['아보카도','케냐','코끼리','물발자국','농장확대','서식지','수출','건강식'],
+ ghana:['헌옷','가나','칸타만토시장','옷쓰레기','중고시장','패스트패션','폐기물','재활용']};
+function tagCands(){
+  var x=issue(),t=topic(),a=(x&&TAGSUG[x.id])||[];
+  var extra=[];if(t)t.name.split('·').forEach(function(n){n=n.replace(/\s+/g,'');if(n&&a.indexOf(n)<0)extra.push(n);});
+  return a.concat(extra);
+}
+function tagsUsed(){var u=[];for(var j=1;j<=3;j++){var v=fval(it('i6'),'tag'+j).replace(/^#+/,'').trim();if(v)u.push(v);}return u;}
+function buildTagSug(){
+  var box=$('[data-tagsug]');if(!box)return;
+  if(!issue()){box.innerHTML='<span class="hint">시작하기 쪽에서 이슈를 고르면 어울리는 해시태그를 추천해 줘요.</span>';return;}
+  var used=tagsUsed(),c=tagCands();
+  box.innerHTML='<div class="hint">✨ 추천 해시태그 · 눌러서 추가하거나 ‘자동 채우기’를 눌러 보세요. 이유는 직접 써요.</div><div class="tagchips">'+
+    c.map(function(w){var on=used.indexOf(w)>=0;return '<button type="button" class="tagchip'+(on?' on':'')+'" data-tagpick="'+esc(w)+'" aria-pressed="'+on+'">#'+esc(w)+'</button>';}).join('')+
+    '</div><button type="button" class="btn ghost sm" data-tagauto>✨ 빈 칸 자동 채우기</button>';
+}
+function addTag(w){
+  var o=it('i6'),used=tagsUsed();if(used.indexOf(w)>=0)return false;
+  for(var j=1;j<=3;j++){if(!filled(fval(o,'tag'+j))){o.f['tag'+j]=w;var e=document.querySelector('[data-item="i6"][data-f="tag'+j+'"]');if(e)e.value=w;return true;}}
+  return false;
+}
 function engineLink(q,kind){
   return kind==='n'?'https://search.naver.com/search.naver?query='+encodeURIComponent(q):'https://www.google.com/search?q='+encodeURIComponent(q);
 }
@@ -871,7 +897,7 @@ function setTopic(id){
   if(state.issue)showOv(state.issue);else $('#ovInfo').innerHTML='<span class="hint">점을 눌러 보세요.</span>';
 }
 function refreshTopicViews(){
-  var t=topic(),x=issue();buildTopicInfo();buildScaf();
+  var t=topic(),x=issue();buildTopicInfo();buildScaf();buildTagSug();
   var md=mode();
   $$('[data-mode]').forEach(function(e){e.hidden=(e.dataset.mode!==md);});
   ITEMS.forEach(function(d){
@@ -890,6 +916,8 @@ function chooseIssue(id){
 }
 document.addEventListener('click',function(e){
   var t=e.target.closest&&e.target.closest('[data-ov]');if(t){showOv(t.dataset.ov);return;}
+  var tp=e.target.closest&&e.target.closest('[data-tagpick]');if(tp){if(!addTag(tp.dataset.tagpick))toast('해시태그 칸이 이미 모두 찼어요. 지우고 다시 눌러 보세요.');buildTagSug();updateProgress();persist(false);return;}
+  var ta=e.target.closest&&e.target.closest('[data-tagauto]');if(ta){tagCands().forEach(function(w){addTag(w);});buildTagSug();updateProgress();persist(false);return;}
   var b=e.target.closest&&e.target.closest('[data-ovpick]');if(b){chooseIssue(b.dataset.ovpick);return;}
   var cs=e.target.closest&&e.target.closest('[data-cstep]');if(cs){var ci=+cs.dataset.cstep;chainSel=(chainSel===ci)?-1:ci;buildTopicInfo();return;}
   var tt=e.target.closest&&e.target.closest('[data-ttab]');if(tt){tinfoTab=tt.dataset.ttab;buildTopicInfo();return;}
@@ -935,9 +963,9 @@ function openReader(kind,i){
     h='<p>'+esc(x.lead)+'</p>';
     h+='<h4>한국어 기사 '+kl2.length+'편 <small>(꼭 읽어요)</small></h4>';
     kl2.forEach(function(a2){h+='<div class="artcard req"><span class="tag">꼭 읽기</span><b>'+esc(a2[0])+'</b><div class="meta">'+esc(a2[1])+' · '+esc(a2[2])+'</div><div>'+esc(a2[4])+'</div><p style="margin:6px 0 0"><a class="btn ghost" target="_blank" rel="noopener" href="'+esc(a2[3])+'">기사 원문 읽기 ↗</a></p></div>';});
-    h+='<h4>시기별 이슈 연표</h4><table class="data"><tbody>';
+    h+='<h4>시기별 이슈 연표</h4><div class="think"><b>읽기 포인트</b> · '+esc(x.think)+'</div><table class="data"><tbody>';
     x.rows.forEach(function(r){h+='<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>';});
-    h+='</tbody></table><div class="think"><b>읽기 포인트</b> · '+esc(x.think)+'</div>';
+    h+='</tbody></table>';
     h+='<h4>외국 자료 <small>(더 알아보고 싶을 때)</small></h4>';
     x.src.forEach(function(sr){h+='<div class="artcard"><b>'+esc(sr[0])+'</b><div class="meta">'+esc(domainOf(sr[1]))+'</div>'+(srcRows(x,sr[1])?'<p><b>이 자료에서 확인한 내용</b></p>'+srcRows(x,sr[1]):'')+'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(sr[1])+'">원문 열기 ↗</a></div>';});
     h+='<p class="hint">기사마다 숫자와 관점이 다를 수 있어요. 한국어 기사와 외국 자료를 견주어 보고, 출처와 날짜를 함께 확인하세요. 외국 자료는 브라우저의 번역 기능을 써도 좋아요.</p>';
@@ -995,7 +1023,7 @@ function fieldHTML0(d,f){
     return h+'</div>';
   }
   if(f.type==='tags'){
-    var t='<label class="lb">해시태그 3개와 고른 이유</label>';
+    var t='<label class="lb">해시태그 3개와 고른 이유</label><div class="tagsug" data-tagsug></div>';
     for(var j=1;j<=3;j++){
       t+='<div class="tagrow"><div class="tagin"><input type="text" maxlength="14" data-item="'+d.id+'" data-f="tag'+j+'" placeholder="해시태그 '+j+'" aria-label="해시태그 '+j+'"></div>'+
          '<input type="text" data-item="'+d.id+'" data-f="why'+j+'" placeholder="이 단어를 고른 이유 (한 문장)" aria-label="해시태그 '+j+' 고른 이유"></div>';
@@ -1911,6 +1939,6 @@ if(state.savedAt){try{setSaveState('불러옴 · 마지막 저장 '+hhmm(new Dat
   body.printing .toast{display:none}
   body.printing .editbtn,body.printing .miss a{display:none}
 }
-.scask{margin:-4px 0 10px;padding:8px 12px;background:#f3f8f5;border-radius:8px}.scask .think{display:block;font-size:13.5px;margin-bottom:4px}.scask input{width:100%}.thinkans{width:100%;margin:2px 0 8px}.scstep{border:1px solid #cfe0d6;border-radius:12px;padding:10px 12px;margin:10px 0;background:#fcfefc}.schead{display:flex;gap:12px;align-items:flex-start}.schead p{margin:3px 0;font-size:14.5px}.scic{flex:none;width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#d6ecdf,#fdf3d3);display:flex;align-items:center;justify-content:center;font-size:28px}.scstep .scrow{border-bottom:0}</style>
+.scask{margin:-4px 0 10px;padding:8px 12px;background:#f3f8f5;border-radius:8px}.scask .think{display:block;font-size:13.5px;margin-bottom:4px}.scask input{width:100%}.thinkans{width:100%;margin:2px 0 8px}.scstep{border:1px solid #cfe0d6;border-radius:12px;padding:10px 12px;margin:10px 0;background:#fcfefc}.schead{display:flex;gap:12px;align-items:flex-start}.schead p{margin:3px 0;font-size:14.5px}.scic{flex:none;width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#d6ecdf,#fdf3d3);display:flex;align-items:center;justify-content:center;font-size:28px}.scstep .scrow{border-bottom:0}.tagsug{margin:6px 0 4px}.tagchips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.tagchip{border:1px solid #9bbbad;background:#fff;color:var(--ink,#12382b);border-radius:999px;padding:4px 12px;font:inherit;font-size:14px;cursor:pointer}.tagchip.on{background:#1f7a5c;color:#fff;border-color:#1f7a5c}</style>
 </body>
 </html>
